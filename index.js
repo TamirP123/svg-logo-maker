@@ -1,6 +1,7 @@
 const inquirer = require('inquirer');
 const { writeFile } = require('fs/promises');
 const generateShape = require('./document');
+const { error } = require('console');
 
 
 const questions = [
@@ -32,21 +33,27 @@ const questions = [
 ];
   
   function init() {
+    // Prompt questions
     inquirer.prompt(questions).then((res) => {
-    //   if(res.text.length > 3) {
-    //     console.log("Must be 3 or less characters!")
-    //     inquirer.prompt(questions);
-    //   }
+      // If user enters text longer than 3 characters, return error message.
+      if(res.text.length > 3) {
+        return error("Must be 3 or less characters")
+      }
+      else {
+
+      // Runs generateShape on response
       const template = generateShape(res);
-      console.log(template);
-      console.log("Logo Generated ✅");
-  
+      // console.log(template);
+      // Creates the logo
       writeFile("logo.svg", template, (error) => {
         if (error) {
           console.log(error);
         }
       });
-    });
+    }
+    }).then(() => {
+      console.log("Logo Generated ✅");
+    })
   }
   
   // Function call to initialize app
