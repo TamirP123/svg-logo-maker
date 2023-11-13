@@ -4,6 +4,10 @@ class Shape {
     this.textColor = textColor;
     this.shapeColor = shapeColor;
   }
+
+  setShapeColor(color) {
+    this.shapeColor = color;
+  }
 }
 
 class Square extends Shape {
